@@ -2,15 +2,18 @@ const router = require('express').Router();
 const auth = require('../middleware/auth');
 const Favorite = require('../models/favoriteModel');
 
+// create new favorite
 router.post('/', auth, async (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, rating, movieID } = req.body;
     //validation
     if (!title)
       return res.status(400).json({ msg: 'Not all fields have been entered' });
 
     const newFavorite = new Favorite({
       title,
+      rating,
+      movieID,
       userId: req.user,
     });
     const savedFavorite = await newFavorite.save();
@@ -34,6 +37,8 @@ router.get('/:id', auth, async (req, res) => {
   });
   res.json(favorite);
 });
+
+// delete a favorite
 
 router.delete('/:id', auth, async (req, res) => {
   console.log({ params: req.params });
