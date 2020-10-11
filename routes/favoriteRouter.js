@@ -5,14 +5,15 @@ const Favorite = require('../models/favoriteModel');
 // create new favorite
 router.post('/', auth, async (req, res) => {
   try {
-    const { movieId } = req.body;
+    const { movieId, movieTitle } = req.body;
 
     //validation
-    if (!movieId)
+    if (!movieId || !movieTitle)
       return res.status(400).json({ msg: 'Not all fields have been entered' });
 
     const newFavorite = new Favorite({
       movieId,
+      movieTitle,
       userId: req.user,
     });
     const savedFavorite = await newFavorite.save();
