@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
         .json({ msg: 'no account with this email registered' });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: 'invalid credentials' });
+    if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({
